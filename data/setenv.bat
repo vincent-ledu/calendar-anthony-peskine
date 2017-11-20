@@ -1,0 +1,1 @@
+PATH=C:\Program Files\Python36;C:\Program Files\Python36\scripts;%PATH%

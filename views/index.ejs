@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        #map {
+            height: 800px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Calendar maps</h3>
+    <div id="map"></div>
+    <script>
+        function initMap() {
+            var paris = { lat: 48.862725, lng: 2.287592000000018 };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: paris
+            });
+
+            var locations;
+            $.get('/addresses', function(data) {
+                locations = JSON.parse(data);
+                console.log(locations);
+                var marker, i;
+                for (i = 0; i < locations.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i].lat, locations[i].lon),
+                        map: map,
+                        title: locations[i].name
+                    });
+
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            var infowindow = new google.maps.InfoWindow();
+                            infowindow.setContent(locations[i].name);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
+            });
+            
+            
+
+
+            
+        }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEdNZ6NATNnJzm40Gad0O9EwcUvn0Rki8&callback=initMap">
+    </script>
+</body>
+
+</html>
