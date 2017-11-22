@@ -1,7 +1,7 @@
 {
   "name": "tp-todolist",
   "version": "0.0.1",
-  "description": "A sample Node.js app from hhttps://openclassrooms.com/courses/des-applications-ultra-rapides-avec-node-js/tp-la-todo-list",
+  "description": "A Google map to inventory all streets/places/squares... with a date in its name.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -20,6 +20,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vincent-ledu/projets-nodejs.git"
+    "url": "https://github.com/vincent-ledu/calendar-anthony-peskine.git"
   }
 }

@@ -1,6 +1,21 @@
-# calendar-anthony-peskine
+# Calendar-anthony-peskine
 
-A map to follow calendar activity.
+A Google map to inventory all streets/places/squares... with a date in its name.
+The map gives locations of such streets/places/squares... 
+
+# Data
+
+Datas have been downloader from https://bano.openstreetmap.fr/data/ (full.sjson file), then processed with scripts:
+* data/get_address_json_v2.sh: Shell script that parse file and extract street with a date in it.
+* data/quality_enhance.py: python script that parse street name, attempt to recognize date and add it to dataset (france_final.json)
+
+# Requirements
+
+* To run the app:
+  * NodeJs (see Installation instructions)
+* To use data extractor
+  * python binaries (tested with v3.4 and v3.6)
+  * bash shell interpreter (linux, macOS, mobaxterm)
 
 # Installation instructions
 
