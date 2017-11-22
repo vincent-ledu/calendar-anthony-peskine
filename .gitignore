@@ -1,5 +1,6 @@
 data/full.sjson
 data/full.sjson.gz
+data/setenv.bat
 
 # Logs
 logs
