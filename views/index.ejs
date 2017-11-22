@@ -69,7 +69,7 @@
                 }
                 AddCalendar(myfunc, dates);
                 var report = "<ul>";
-                report += "<li>#dates found: " + Object.keys(dates).length + " / 365</li><ul>";
+                report += "<li>#dates found: " + Object.keys(dates).length + " / 366</li><ul>";
                 var datelist = [];
                 for (datel in datelocations)
                 {
@@ -152,7 +152,7 @@
     </script>
     
     
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEdNZ6NATNnJzm40Gad0O9EwcUvn0Rki8&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={your google api key here}&callback=initMap">
     </script>
 </body>
 
