@@ -2,20 +2,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
 }
-#page {
-    display: flex;
-    flex-direction: row;
-}
-#map {
-    height: 800px;
-    width: 80%;
-}
-#calendar {
-    display: flex;
-    flex-wrap: wrap;
-    width: 20%;
 
-}
 .month {
     background-color: #fff;
     color: #000;

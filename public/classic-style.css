@@ -1,0 +1,14 @@
+#page {
+    display: flex;
+    flex-direction: row;
+}
+#map {
+    height: 800px;
+    width: 80%;
+}
+#calendar {
+    display: flex;
+    flex-wrap: wrap;
+    width: 20%;
+
+}
