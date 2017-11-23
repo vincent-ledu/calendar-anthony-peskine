@@ -1,5 +1,5 @@
 {
-  "name": "tp-todolist",
+  "name": "street-calendar",
   "version": "0.0.1",
   "description": "A Google map to inventory all streets/places/squares... with a date in its name.",
   "main": "index.js",
