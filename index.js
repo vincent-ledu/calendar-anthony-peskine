@@ -101,4 +101,4 @@ app.get('/addresses/filter/:filter', function (req, res) {
 
 var server_port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
-app.listen(server_port, server_ip_address);
+app.listen(server_port, server_ip);
