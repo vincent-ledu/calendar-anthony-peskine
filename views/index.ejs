@@ -48,7 +48,7 @@
                 myloc.setPosition(me);
                 map.setZoom(12);
             }, function(error) {
-                // ...
+                // nothing to do.
             });
 
             $.get('/addresses', function(data) {
@@ -62,9 +62,7 @@
                     for (var i = 0; i < datelocations[datel].length; i++)
                     {
                         var loc = datelocations[datel][i];
-                        //console.log(loc);
-                        addMarker(loc);
-                        //addMarkerListener(loc.name + ", " + loc.city, marker);
+                        addMarker(loc, datel);
                     }
                 }
 
@@ -79,8 +77,7 @@
                             for (var i = 0; i < datelocations[datel].length; i++)
                             {
                                 var loc = datelocations[datel][i];
-                                //console.log(loc);
-                                addMarker(loc);
+                                addMarker(loc, datel);
                                 
                             }
                         }
@@ -104,13 +101,21 @@
                 $("#report").html(report);
             });
         }
-        function addMarker(location) {
+
+        function getInfoWindowContent(location, datel) {
+            var content = "<h3>"+location.name+"</h3>";
+            content += "<div>" + location.city + "</div>";
+            content += '<a href="addresses/done/'+ datel + '">Set as done!</a>';
+            return content;
+        }
+
+        function addMarker(location, datel) {
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(location.lat, location.lon),
                 map: map
             });
             markers.push(marker);
-            addMarkerListener(location.name + ", " + location.city, marker);
+            addMarkerListener(getInfoWindowContent(location, datel), marker);
         }
         // Sets the map on all markers in the array.
         function setMapOnAll(map) {
@@ -134,6 +139,7 @@
             clearMarkers();
             markers = [];
         }
+        
 
         function addMarkerListener(content, marker) {
             google.maps.event.addListener(marker, 'click', (function (marker, content) {
