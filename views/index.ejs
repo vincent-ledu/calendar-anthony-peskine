@@ -32,9 +32,27 @@
                 zoom: 4,
                 center: paris
             });
+            var myloc = new google.maps.Marker({
+                clickable: false,
+                icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
+                                                                new google.maps.Size(22,22),
+                                                                new google.maps.Point(0,18),
+                                                                new google.maps.Point(11,11)),
+                shadow: null,
+                zIndex: 999,
+                map: map
+            });
+
+            if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function(pos) {
+                var me = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+                myloc.setPosition(me);
+                map.setZoom(12);
+            }, function(error) {
+                // ...
+            });
 
             $.get('/addresses', function(data) {
-                datelocations = JSON.parse(data);
+                datelocations = data;
                 for (var datel in datelocations)
                 {
                     if (Array.isArray(datelocations[datel]))
@@ -45,16 +63,15 @@
                     {
                         var loc = datelocations[datel][i];
                         //console.log(loc);
-                        var marker = addMarker(loc);
-                        addMarkerListener(loc.name + ", " + loc.city, marker);
+                        addMarker(loc);
+                        //addMarkerListener(loc.name + ", " + loc.city, marker);
                     }
                 }
 
                 myfunc = function() {
                     var filter = $("#filter").val();
-                    console.log("filter: "+ filter);
                     $.get("/addresses/filter/" + filter, function(data) {
-                        datelocations = JSON.parse(data);
+                        datelocations = data;
                         deleteMarkers();
 
                         for (var datel in datelocations)
@@ -63,8 +80,8 @@
                             {
                                 var loc = datelocations[datel][i];
                                 //console.log(loc);
-                                var marker = addMarker(loc);
-                                addMarkerListener(loc.name + ", " + loc.city, marker);
+                                addMarker(loc);
+                                
                             }
                         }
                     });
@@ -93,7 +110,7 @@
                 map: map
             });
             markers.push(marker);
-            return marker;
+            addMarkerListener(location.name + ", " + location.city, marker);
         }
         // Sets the map on all markers in the array.
         function setMapOnAll(map) {

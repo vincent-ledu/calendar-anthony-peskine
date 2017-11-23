@@ -36,15 +36,13 @@ app.get('/calendar', function (req, res) {
 app.get('/addresses', function (req, res) {
   // get list of address in a json object
   //res.render('todolist.ejs', {todolist: req.session.todolist});
+  res.contentType('application/json');
   try {
     if (req.params.filter != 'undefined') {
       console.log("filter:" + req.params.filter);
     }
-    console.log(req.query);
-    console.log(req.url);
     
     var daydone = db.getData('/');
-    console.log(daydone);
     for (var d in daydone)
     {
       if (d in jsondata)
@@ -52,7 +50,6 @@ app.get('/addresses', function (req, res) {
         jsondata[d] = true;
       }
     }
-    //console.log(data);
     res.write(JSON.stringify(jsondata));
     res.end();
   } catch (e) {
@@ -63,6 +60,7 @@ app.get('/addresses/filter/:filter', function (req, res) {
   // get list of address in a json object
   //res.render('todolist.ejs', {todolist: req.session.todolist});
   try {
+    res.contentType('application/json');
     if (req.params.filter != 'undefined')
     {
       var filter = req.params.filter;
