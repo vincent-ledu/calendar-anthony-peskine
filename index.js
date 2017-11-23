@@ -6,12 +6,14 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var morgan = require('morgan'); // Charge le middleware de logging
 var favicon = require('serve-favicon'); // Charge le middleware de favicon
 var JsonDB = require('node-json-db');
-var db = new JsonDB("data/calendar-peskine", true, true);
 
 
 var app = express();
 var data = fs.readFileSync('data/france_final.json', 'utf8');
 var jsondata = JSON.parse(data);
+
+var data_dir = process.env.OPENSHIFT_DATA_DIR || 'data'
+var db = new JsonDB(data_dir + "/calendar-peskine", true, true);
 
 app.use(session({ secret: 'calendarsessionsecret' }))
 
@@ -97,4 +99,6 @@ app.get('/addresses/filter/:filter', function (req, res) {
     res.redirect('/');
   });
 
-app.listen(8080, 'localhost');
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+app.listen(server_port, server_ip_address);
