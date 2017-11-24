@@ -14,6 +14,7 @@ var jsondata = JSON.parse(data);
 
 var data_dir = process.env.OPENSHIFT_DATA_DIR || 'data'
 var db = new JsonDB(data_dir + "/calendar-peskine", true, true);
+console.log("DATA_DIR: " + data_dir);
 
 app.use(session({ secret: 'calendarsessionsecret' }))
 
@@ -84,8 +85,8 @@ app.get('/addresses/filter/:filter', function (req, res) {
     res.end();
   }
 })
-  .get('/addresses/done/:month_day', function (req, res) {
-    // todo : update address to done
+  .post('/addresses/done/:month_day', function (req, res) {
+    // todo : handle uploaded picture
     if (req.params.month_day != "undefined") {
       db.push("/" + req.params.month_day, true, true);
     }
