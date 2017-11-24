@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" media="screen and (max-width: 1280px)" href="smartphone-style.css" />
     <link rel="stylesheet" media="screen and (min-width: 1280px)" href="classic-style.css" />
-    
+
 </head>
 
 <body>
@@ -16,9 +17,12 @@
 
     <h3>Calendar maps</h3>
     <div id="page">
-        <div id="calendar"></div><div id="map"></div>
+        <div id="calendar"></div>
+        <div id="map"></div>
     </div>
-    <div><input type='hidden' id="filter" value=''></input></div>
+    <div>
+        <input type='hidden' id="filter" value=''></input>
+    </div>
     <div id="report"></div>
     <script>
         var map;
@@ -35,50 +39,46 @@
             var myloc = new google.maps.Marker({
                 clickable: false,
                 icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
-                                                                new google.maps.Size(22,22),
-                                                                new google.maps.Point(0,18),
-                                                                new google.maps.Point(11,11)),
+                    new google.maps.Size(22, 22),
+                    new google.maps.Point(0, 18),
+                    new google.maps.Point(11, 11)),
                 shadow: null,
                 zIndex: 999,
                 map: map
             });
 
-            if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function(pos) {
+            if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function (pos) {
                 var me = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
                 myloc.setPosition(me);
                 map.setZoom(12);
-            }, function(error) {
+            }, function (error) {
                 // nothing to do.
             });
 
-            $.get('/addresses', function(data) {
+            $.get('/addresses', function (data) {
                 datelocations = data;
-                for (var datel in datelocations)
-                {
+                for (var datel in datelocations) {
                     if (Array.isArray(datelocations[datel]))
                         dates[datel] = 0;
                     else
                         dates[datel] = 1;
-                    for (var i = 0; i < datelocations[datel].length; i++)
-                    {
+                    for (var i = 0; i < datelocations[datel].length; i++) {
                         var loc = datelocations[datel][i];
                         addMarker(loc, datel);
                     }
                 }
 
-                myfunc = function() {
+                myfunc = function () {
                     var filter = $("#filter").val();
-                    $.get("/addresses/filter/" + filter, function(data) {
+                    $.get("/addresses/filter/" + filter, function (data) {
                         datelocations = data;
                         deleteMarkers();
 
-                        for (var datel in datelocations)
-                        {
-                            for (var i = 0; i < datelocations[datel].length; i++)
-                            {
+                        for (var datel in datelocations) {
+                            for (var i = 0; i < datelocations[datel].length; i++) {
                                 var loc = datelocations[datel][i];
                                 addMarker(loc, datel);
-                                
+
                             }
                         }
                     });
@@ -87,14 +87,12 @@
                 var report = "<ul>";
                 report += "<li>#dates found: " + Object.keys(dates).length + " / 366</li><ul>";
                 var datelist = [];
-                for (datel in datelocations)
-                {
+                for (datel in datelocations) {
                     if (Array.isArray(datelocations[datel]))
                         datelist.push("<li>#" + datel + ": " + datelocations[datel].length + "</li>");
                 }
                 datelist.sort();
-                for (var i = 0; i < datelist.length; i++)
-                {
+                for (var i = 0; i < datelist.length; i++) {
                     report += datelist[i];
                 }
                 report += "</ul></ul>";
@@ -103,11 +101,14 @@
         }
 
         function getInfoWindowContent(location, datel) {
-            var content = "<h3>"+location.name+"</h3>";
+            var content = "<h3>" + location.name + "</h3>";
             content += "<div>" + location.city + "</div>";
-            content += '<p><form method="post" action="addresses/done/'+ datel + '" enctype="multipart/form-data">';
+            content += '<p><form method="post" action="addresses/done/' + datel + '" enctype="multipart/form-data">';
             content += '<div>';
-            content += '<input type="file" id="file" name="file" accept="image/*" capture="camera" />';
+            content += '<label>Please, provide your email: </label>'
+            content += '<input type="text" id="email" name="email"  required/>';
+            content += '</div><div>'
+            content += '<input type="file" id="file" name="file" accept="image/*" capture="camera" required/>';
             content += '</div><div><button>Envoyer</button></div></form></p>'
             return content;
         }
@@ -142,18 +143,18 @@
             clearMarkers();
             markers = [];
         }
-        
+
 
         function addMarkerListener(content, marker) {
             google.maps.event.addListener(marker, 'click', (function (marker, content) {
-                        return function () {
-                            var infowindow = new google.maps.InfoWindow();
-                            infowindow.setContent(content);
-                            infowindow.open(map, marker);
-                        }
-                    })(marker, content));
+                return function () {
+                    var infowindow = new google.maps.InfoWindow();
+                    infowindow.setContent(content);
+                    infowindow.open(map, marker);
+                }
+            })(marker, content));
         }
-           
+
         // Sets the map on all markers in the array.
         function setMapOnAll(map) {
             for (var i = 0; i < markers.length; i++) {
@@ -176,10 +177,10 @@
             clearMarkers();
             markers = [];
         }
-        
+
     </script>
-    
-    
+
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAfh6gypdAxCtsg-UwtW3Q-4gCyGE2U2s&callback=initMap">
     </script>
 </body>

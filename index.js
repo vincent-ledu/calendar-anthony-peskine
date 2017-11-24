@@ -5,6 +5,7 @@ var bodyParser = require('body-parser'); // Charge le middleware de gestion des 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var morgan = require('morgan'); // Charge le middleware de logging
 var favicon = require('serve-favicon'); // Charge le middleware de favicon
+var multer  = require('multer')
 var JsonDB = require('node-json-db');
 
 
@@ -12,9 +13,11 @@ var app = express();
 var data = fs.readFileSync('data/france_final.json', 'utf8');
 var jsondata = JSON.parse(data);
 
-var data_dir = process.env.OPENSHIFT_DATA_DIR || 'data/';
+var data_dir = process.env.OPENSHIFT_DATA_DIR || '../data/';
+var photos_dir = data_dir + "/photos/";
 console.log("process.env.OPENSHIFT_DATA_DIR: "+process.env.OPENSHIFT_DATA_DIR);
 console.log("DATA_DIR: " + data_dir);
+var upload = multer({ dest: photos_dir })
 
 var db;
 try {
@@ -25,7 +28,6 @@ try {
 }
 
 app.use(session({ secret: 'calendarsessionsecret' }))
-
   .use(morgan('combined'))
   .use(express.static(__dirname + '/public'))
   .use(favicon(__dirname + '/public/favicon.ico'))
@@ -93,10 +95,24 @@ app.get('/addresses/filter/:filter', function (req, res) {
     res.end();
   }
 })
-  .post('/addresses/done/:month_day', function (req, res) {
+
+  .post('/addresses/done/:month_day', upload.single('file'), function (req, res, next) {
     // todo : handle uploaded picture
     if (req.params.month_day != "undefined") {
-      db.push("/" + req.params.month_day, true, true);
+      var email = req.body.email;
+      var tmp_path = req.file.path;
+      var target_path = photos_dir + req.params.month_day + req.file.originalname;
+      var src = fs.createReadStream(tmp_path);
+      var dest = fs.createWriteStream(target_path);
+      console.log("email: " + email);      
+      src.pipe(dest);
+      src.on('end', function() { 
+        db.push("/" + req.params.month_day, email, true);
+        res.redirect('/'); 
+      });
+      //src.on('error', function(err) { res.render('error'); });
+    } else {
+      res.redirect('/');
     }
     res.redirect('/');
   })
