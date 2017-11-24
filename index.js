@@ -12,8 +12,9 @@ var app = express();
 var data = fs.readFileSync('data/france_final.json', 'utf8');
 var jsondata = JSON.parse(data);
 
-var data_dir = process.env.OPENSHIFT_DATA_DIR || 'data'
-var db = new JsonDB(data_dir + "/calendar-peskine", true, true);
+var data_dir = '';
+console.log("process.env.OPENSHIFT_DATA_DIR: "+process.env.OPENSHIFT_DATA_DIR);
+var db = new JsonDB(data_dir + "data/calendar-peskine", true, true);
 console.log("DATA_DIR: " + data_dir);
 
 app.use(session({ secret: 'calendarsessionsecret' }))
