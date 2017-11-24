@@ -13,7 +13,7 @@ var app = express();
 var data = fs.readFileSync('data/france_final.json', 'utf8');
 var jsondata = JSON.parse(data);
 
-var data_dir = process.env.OPENSHIFT_DATA_DIR || '../data/';
+var data_dir = process.env.OPENSHIFT_DATA_DIR || 'data/';
 var photos_dir = data_dir + "/photos/";
 console.log("process.env.OPENSHIFT_DATA_DIR: "+process.env.OPENSHIFT_DATA_DIR);
 console.log("DATA_DIR: " + data_dir);
