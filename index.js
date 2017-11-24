@@ -14,8 +14,15 @@ var jsondata = JSON.parse(data);
 
 var data_dir = process.env.OPENSHIFT_DATA_DIR || 'data/';
 console.log("process.env.OPENSHIFT_DATA_DIR: "+process.env.OPENSHIFT_DATA_DIR);
-var db = new JsonDB(data_dir + "/calendar-peskine", true, true);
 console.log("DATA_DIR: " + data_dir);
+
+var db;
+try {
+  db = new JsonDB(data_dir + "/calendar-peskine", true, true);
+} catch (e) {
+  console.log(e);
+  db = new JsonDB("data/calendar-peskine", true, true);
+}
 
 app.use(session({ secret: 'calendarsessionsecret' }))
 
