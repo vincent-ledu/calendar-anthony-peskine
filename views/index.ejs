@@ -105,7 +105,10 @@
         function getInfoWindowContent(location, datel) {
             var content = "<h3>"+location.name+"</h3>";
             content += "<div>" + location.city + "</div>";
-            content += '<a href="addresses/done/'+ datel + '">Set as done!</a>';
+            content += '<p><form method="post" action="addresses/done/'+ datel + '" enctype="multipart/form-data">';
+            content += '<div>';
+            content += '<input type="file" id="file" name="file" accept="image/*" capture="camera" />';
+            content += '</div><div><button>Envoyer</button></div></form></p>'
             return content;
         }
 
