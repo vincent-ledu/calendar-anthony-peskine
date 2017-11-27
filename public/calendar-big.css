@@ -1,0 +1,100 @@
+:root {
+    --month-width: 1200px;
+    --week-width: 1120px;
+    --week-last-row-width: 480px;
+    --day-width: 160px;
+    --day-height: 160px;
+}
+
+.month {
+    background-color: #fff;
+    color: #000;
+    font-size: 20px;
+    width: var(--month-width);
+    border-radius: 3px;
+    border: 1px solid #000;
+    padding: 5px;
+    margin: 0px;
+    /* margin: auto; */
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+}
+.week {
+    margin: 0px;
+    padding: 0px;
+    width: var(--week-width);
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+.week-lastrow {
+    margin: 0px;
+    padding: 0px;
+    width: var(--week-lastrow-width);
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /*border: 1px solid #000;*/
+    justify-content: left;
+}
+.day {
+    background-color: #fff;
+    color: #000;
+    border-radius: 0px;
+    font-size: 0.7em;
+    border: 1px solid #000;
+    float: left;
+    width: var(--day-width);
+    height: var(--day-height);
+    text-align: center;
+}
+.day-selected {
+    background-color: rgb(0, 89, 255);
+    color: #000;
+    border-radius: 0px;
+    font-size: 0.7em;
+    border: 1px solid #000;
+    float: left;
+    width: var(--day-width);
+    height: var(--day-height);
+    text-align: center;
+}
+.day-done {
+    /*background-color: rgb(0, 231, 85);*/
+    background-repeat: no-repeat;
+    background-size: 160px 160px;
+    color: #000;
+    border-radius: 0px;
+    font-size: 0.7em;
+    border: 1px solid #000;
+    float: left;
+    width: var(--day-width);
+    height: var(--day-height);
+    text-align: center;
+}
+.day-notfound {
+    background: repeating-linear-gradient(
+        45deg,
+        #000000,
+        #000000 10px,
+        #727272 10px,
+        #727272 20px
+      );
+    /*background-color: #fff;*/
+    color: #000;
+    border-radius: 0px;
+    font-size: 0.7em;
+    border: 1px solid #000;
+    float: left;
+    width: var(--day-width);
+    height: var(--day-height);
+    text-align: center;
+}
+

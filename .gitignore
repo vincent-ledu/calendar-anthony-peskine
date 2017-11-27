@@ -1,7 +1,13 @@
 data/full.sjson
 data/full.sjson.gz
 data/setenv.bat
-
+data/janvier.txt
+data/janvier_awk.txt
+data/fevrier.txt
+data/mars.txt
+data/avril.txt
+data/mai.txt
+data/juin.txt
 # Logs
 logs
 *.log

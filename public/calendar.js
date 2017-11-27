@@ -31,10 +31,16 @@ function AddCalendar(clickfunc, date_available) {
             //console.log(date_available);
             if (!(day_id in date_available))
                 dayclass = "day-notfound";
-            else if (date_available[day_id] == 1)
+            else if (date_available[day_id] != 0)
+            {
                 dayclass = "day-done";
+            }
             $week.append('<span class="'+dayclass+'" id='+ day_id +'>'+("0" + mydate.getUTCDate()).slice(-2)+'</span>');
             $day = $("."+dayclass+"#"+("0" + (mydate.getMonth() + 1)).slice(-2)+ '_' + ("0" + mydate.getUTCDate()).slice(-2));
+            if (dayclass == "day-done")
+            {
+                $day.css('background-image', 'url('+date_available[day_id].filename+')');
+            }
             $day.on('click', function(e) {
                 var $this = $(this);
                 //console.log($this.attr("class"));

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-METHOD="PIPED"
+METHOD="UNPIPED"
 
 declare -a arrmonths=("janvier" "février" "mars" "avril" "mai" "juin" "juillet" "août" "septembre" "octobre" "novembre" "décembre")
 months="janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre"
@@ -15,8 +15,9 @@ if [ "$METHOD" == "UNPIPED" ]; then
 		cat full.sjson | grep -iw "$month" \
 		| grep -vi "maison" \
 		| awk -F "," 'tolower($3) ~ "0|1|2|3|4|5|6|7|8|9|premier|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|trente" { print $0 }' \
-		| jq '. | "{\"name\":\"\(.name)\", \"city\": \"\(.city)\", \"region\":\"\(.region)\", \"country\":\"France\", \"lat\":\(.lat), \"lon\":\(.lon)}"' \
-		|  sed 's/\"{/{/g' | sed 's/\\\"/\"/g' | sed 's/}\"/},/g'
+		| jq '. | "{\"id\":\"\(.id)\", \"name\":\"\(.name)\", \"city\": \"\(.city)\", \"region\":\"\(.region)\", \"country\":\"France\", \"lat\":\(.lat), \"lon\":\(.lon)}"' \
+		|  sed 's/\"{/{/g' | sed 's/\\\"/\"/g' | sed 's/}\"/},/g' \
+		| sort -u
 	done
 else
 	>&2 echo "PIPED METHOD"
@@ -24,8 +25,9 @@ else
 	cat full.sjson | grep -iw "$months" \
 		| grep -vi "maison" \
 		| awk -F "," 'tolower($3) ~ "0|1|2|3|4|5|6|7|8|9|premier|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|trente" { print $0 }' \
-		| jq '. | "{\"name\":\"\(.name)\", \"city\": \"\(.city)\", \"region\":\"\(.region)\", \"country\":\"France\", \"lat\":\(.lat), \"lon\":\(.lon)}"' \
-		|  sed 's/\"{/{/g' | sed 's/\\\"/\"/g' | sed 's/}\"/},/g'
+		| jq '. | "{\"id\":\"\(.id)\", \"name\":\"\(.name)\", \"city\": \"\(.city)\", \"region\":\"\(.region)\", \"country\":\"France\", \"lat\":\(.lat), \"lon\":\(.lon)}"' \
+		|  sed 's/\"{/{/g' | sed 's/\\\"/\"/g' | sed 's/}\"/},/g' \
+		| sort -u
 fi
 
 echo "]"

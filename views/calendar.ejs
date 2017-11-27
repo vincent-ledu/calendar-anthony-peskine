@@ -5,21 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="calendar-big.css" />
+    <link rel="stylesheet" media="screen and (max-width: 1280px)" href="smartphone-style.css" />
+    <link rel="stylesheet" media="screen and (min-width: 1280px)" href="classic-style.css" />
 </head>
 
 <body>
     <h3>Calendar</h3>
-    <div><span id="filter">filter</span></div>
+    <div><p><a href="/">Add a photo</a></p></div>
+    <div>
+        <input type='hidden' id="filter" value=''></input>
+    </div>
     <div id="calendar"></div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="calendar.js"></script>
     
     <script>
-        myfunc = function() {
-            console.log("hello");
-        }
-        AddCalendar(myfunc);
+        var dates = {};
+        $.get('/addresses', function (data) {
+                datelocations = data;
+                for (var datel in datelocations) {
+                    if (Array.isArray(datelocations[datel]))
+                        dates[datel] = 0;
+                    else
+                        dates[datel] = datelocations[datel];
+                }
+                myfunc = function() {
+                    
+                }
+                AddCalendar(myfunc, dates);
+            });
+
+
     </script>
 </body>
 

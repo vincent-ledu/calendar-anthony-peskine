@@ -30,6 +30,7 @@ try {
 app.use(session({ secret: 'calendarsessionsecret' }))
   .use(morgan('combined'))
   .use(express.static(__dirname + '/public'))
+  .use(express.static(photos_dir))
   .use(favicon(__dirname + '/public/favicon.ico'))
   .use(function (req, res, next) {
     if (typeof (req.session.todolist) == 'undefined') {
@@ -56,10 +57,7 @@ app.get('/addresses', function (req, res) {
     var daydone = db.getData('/');
     for (var d in daydone)
     {
-      if (d in jsondata)
-      {
-        jsondata[d] = true;
-      }
+      jsondata[d] = daydone[d];
     }
     res.write(JSON.stringify(jsondata));
     res.end();
@@ -98,16 +96,18 @@ app.get('/addresses/filter/:filter', function (req, res) {
 
   .post('/addresses/done/:month_day', upload.single('file'), function (req, res, next) {
     // todo : handle uploaded picture
-    if (req.params.month_day != "undefined") {
+    if (req.params.month_day != "undefined" && req.params.idlocation != "undefined") {
       var email = req.body.email;
+      var filename = req.file.originalname;
+      var idlocation = req.params.idlocation;
       var tmp_path = req.file.path;
-      var target_path = photos_dir + req.params.month_day + req.file.originalname;
+      var target_path = photos_dir + req.params.month_day + filename.substr(filename.lastIndexOf('.'));;
       var src = fs.createReadStream(tmp_path);
       var dest = fs.createWriteStream(target_path);
-      console.log("email: " + email);      
       src.pipe(dest);
       src.on('end', function() { 
-        db.push("/" + req.params.month_day, email, true);
+        db.push("/" + req.params.month_day, JSON.parse('{"email": "'+email+'", "id":"'+idlocation+
+          '", "filename":"'+req.params.month_day + filename.substr(filename.lastIndexOf('.'))+'"}'), true);
         res.redirect('/'); 
       });
       //src.on('error', function(err) { res.render('error'); });

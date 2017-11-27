@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="calendar-small.css" />
     <link rel="stylesheet" media="screen and (max-width: 1280px)" href="smartphone-style.css" />
     <link rel="stylesheet" media="screen and (min-width: 1280px)" href="classic-style.css" />
 
@@ -16,6 +17,7 @@
     <script src="calendar.js"></script>
 
     <h3>Calendar maps</h3>
+    <div><p><a href="/calendar">What is it ?</a></p></div>
     <div id="page">
         <div id="calendar"></div>
         <div id="map"></div>
@@ -107,6 +109,7 @@
             content += '<div>';
             content += '<label>Please, provide your email: </label>'
             content += '<input type="text" id="email" name="email"  required/>';
+            content += '<input type="hidden" id="idlocation" name="idlocation" value="'+location.id+'"></input>'
             content += '</div><div>'
             content += '<input type="file" id="file" name="file" accept="image/*" capture="camera" required/>';
             content += '</div><div><button>Envoyer</button></div></form></p>'
