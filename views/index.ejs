@@ -49,8 +49,8 @@
 
             if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function (pos) {
                 var me = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+                map.setZoom(10);
                 myloc.setPosition(me);
-                map.setZoom(12);
             }, function (error) {
                 // nothing to do.
             });

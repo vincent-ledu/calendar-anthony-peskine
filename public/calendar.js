@@ -7,7 +7,7 @@ Date.prototype.addDays = function(days) {
 var monthsName = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
 
 function AddCalendar(clickfunc, date_available) {
-    var mydate = new Date(2004, 0, 1, 2, 2, 2, 2);
+    var mydate = new Date(2004, 0, 1, 5, 2, 2, 2);
     var week = 0;
     var $calendar;
     $calendar = $('div#calendar');
