@@ -63,7 +63,7 @@
                     if (Array.isArray(datelocations[datel]))
                         dates[datel] = 0;
                     else
-                        dates[datel] = 1;
+                        dates[datel] = datelocations[datel];
                     for (var i = 0; i < datelocations[datel].length; i++) {
                         var loc = datelocations[datel][i];
                         addMarker(loc, datel);
@@ -107,15 +107,15 @@
             content += "<div>" + location.city + "</div>";
             content += '<p><form method="post" action="addresses/done/' + datel + '" enctype="multipart/form-data">';
             content += '<div>';
-            content += '<label>Please, provide your email: </label>'
+            content += '<label>Please, provide your email: </label>';
             content += '<input type="text" id="email" name="email"  required/>';
-            content += '<input type="hidden" id="idlocation" name="idlocation" value="'+location.id+'"></input>'
-            content += '</div><div>'
-            content += '<input type="file" id="file" name="file" accept="image/*" capture="camera" required/>';
-            content += '</div><div><button>Envoyer</button></div></form></p>'
+            content += '<input type="hidden" class="imageuploader" id="idlocation" name="idlocation" value="'+location.id+'"></input>';
+            content += '</div><div>';
+            content += '<input type="file" id="imagefile" name="imagefile" accept="image/*" capture="camera" required/>';
+            content += '</div><div><button>Envoyer</button></div></form></p>';
             return content;
         }
-
+        
         function addMarker(location, datel) {
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(location.lat, location.lon),

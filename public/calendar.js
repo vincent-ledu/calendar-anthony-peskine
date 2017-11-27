@@ -39,7 +39,7 @@ function AddCalendar(clickfunc, date_available) {
             $day = $("."+dayclass+"#"+("0" + (mydate.getMonth() + 1)).slice(-2)+ '_' + ("0" + mydate.getUTCDate()).slice(-2));
             if (dayclass == "day-done")
             {
-                $day.css('background-image', 'url('+date_available[day_id].filename+')');
+                $day.css('background-image', 'url('+date_available[day_id].thumbnail+')');
             }
             $day.on('click', function(e) {
                 var $this = $(this);

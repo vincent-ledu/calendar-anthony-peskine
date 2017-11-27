@@ -8,6 +8,8 @@ data/mars.txt
 data/avril.txt
 data/mai.txt
 data/juin.txt
+data/photos
+
 # Logs
 logs
 *.log

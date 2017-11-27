@@ -7,7 +7,7 @@ var morgan = require('morgan'); // Charge le middleware de logging
 var favicon = require('serve-favicon'); // Charge le middleware de favicon
 var multer  = require('multer')
 var JsonDB = require('node-json-db');
-
+var Jimp = require("jimp");
 
 var app = express();
 var data = fs.readFileSync('data/france_final.json', 'utf8');
@@ -93,22 +93,50 @@ app.get('/addresses/filter/:filter', function (req, res) {
     res.end();
   }
 })
+  app.get('/test', function (req, res) {
+    res.render('test.ejs');
+  })
 
-  .post('/addresses/done/:month_day', upload.single('file'), function (req, res, next) {
+
+  .post('/addresses/done/:month_day', upload.single('imagefile'), function (req, res, next) {
     // todo : handle uploaded picture
     if (req.params.month_day != "undefined" && req.params.idlocation != "undefined") {
+      console.log("req.params.idlocation:" + req.params.idlocation)
       var email = req.body.email;
       var filename = req.file.originalname;
       var idlocation = req.params.idlocation;
       var tmp_path = req.file.path;
-      var target_path = photos_dir + req.params.month_day + filename.substr(filename.lastIndexOf('.'));;
+      var target_filename = req.params.month_day + filename.substr(filename.lastIndexOf('.'));
+      var target_thumb_filename = req.params.month_day + "_thumb" + filename.substr(filename.lastIndexOf('.'));
+      if (target_thumb_filename.endsWith(".gif"))
+        target_thumb_filename += ".jpg";      
+      var target_thumb_path = photos_dir + target_thumb_filename;
+      var target_path = photos_dir + target_filename;
       var src = fs.createReadStream(tmp_path);
       var dest = fs.createWriteStream(target_path);
       src.pipe(dest);
+      
+      
+
       src.on('end', function() { 
-        db.push("/" + req.params.month_day, JSON.parse('{"email": "'+email+'", "id":"'+idlocation+
-          '", "filename":"'+req.params.month_day + filename.substr(filename.lastIndexOf('.'))+'"}'), true);
-        res.redirect('/'); 
+        console.log("target_path: "+target_path);
+        console.log("target_thumb_path: "+target_thumb_path);
+        // open a file called "lenna.png" 
+        try {
+          Jimp.read(target_path, function (err, image) {
+            if (err) throw err;
+              target_thumb_filename += ".jpg";
+            image.resize(256, 256)            // resize 
+                .write(target_thumb_path); // save 
+            
+          });
+          db.push("/" + req.params.month_day, JSON.parse('{"email": "'+email+'", "id":"'+idlocation+
+          '", "filename":"'+target_filename+'", "thumbnail":"'+target_thumb_filename+'"}'), true);
+
+        } catch (e) {
+          console.log("gasp! Error in saving thumbnails! Error: " + e);
+          // redirect to an exlicit error page!
+        }
       });
       //src.on('error', function(err) { res.render('error'); });
     } else {
