@@ -10,7 +10,7 @@ import logging.config
 logging.config.fileConfig('logging.conf')
 
 logger = logging.getLogger(__name__)
-
+'''
 impossibleparsing = ['{"name": "Place du 4 et 5 Septembre", "city": "Hargnies", "region": "Champagne-Ardenne", "country": "France", "lat": 50.019477, "lon": 4.790652}          , "dates": ["09_04", "09_05"]},',
                      '{"name": "Place du 11 Novembre et du 8 Mai", "city": "Essômes-sur-Marne", "region": "Picardie", "country": "France", "lat": 49.029142, "lon": 3.37383}    , "dates": ["11_11", "05_08"]},', 
                      '{"name": "Rue des 19 et 20 Juin 1907", "city": "Cuxac-d"Aude", "region": "Languedoc-Roussillon", "country": "France", "lat": 43.24415, "lon": 2.998209}   , "dates": ["06_19", "06_20"]},',
@@ -23,33 +23,34 @@ impossibleparsing = ['{"name": "Place du 4 et 5 Septembre", "city": "Hargnies", 
                      '{"name": "Place des 8 et 11 Mai 1945", "city": "Saint-Nazaire", "region": "Pays de la Loire", "country": "France", "lat": 47.278412, "lon": -2.216284}    , "dates": ["05_11", "05_08"]},',
                      '{"name": "Avenue des 4, 8 et 9 Septembre", "city": "Le Portel", "region": "Nord-Pas-de-Calais", "country": "France", "lat": 50.70666, "lon": 1.57299}     , "dates": ["09_04", "09_08", "09_09"]},',
                      '{"name": "Rue du Souvenir : 11 Novembre - 8 Mai - 19 Mars", "city": "Germagny", "region": "Bourgogne", "country": "France", "lat": 46.672714, "lon": 4.604167}    , "dates": ["11_11", "05_08", "03_19"]}']
+'''
 impossibleparsingdict = {
-    "03_19": [{"name": "Rue du Souvenir : 11 Novembre - 8 Mai - 19 Mars", "city": "Germagny", "region": "Bourgogne", "country": "France", "lat": 46.672714, "lon": 4.604167}],
-    "04_14": [{"name": "Rue des 14 et 15 Avril 1945", "city": "Vaux-sur-Mer", "region": "Poitou-Charentes", "country": "France", "lat": 45.646181, "lon": -1.060556}],
-    "04_15": [{"name": "Rue des 14 et 15 Avril 1945", "city": "Vaux-sur-Mer", "region": "Poitou-Charentes", "country": "France", "lat": 45.646181, "lon": -1.060556}],
-    "05_08": [{"name": "Place du 11 Novembre et du 8 Mai", "city": "Essômes-sur-Marne", "region": "Picardie", "country": "France", "lat": 49.029142, "lon": 3.37383},
+    "03_19": {'done': False, 'streets' : [{"name": "Rue du Souvenir : 11 Novembre - 8 Mai - 19 Mars", "city": "Germagny", "region": "Bourgogne", "country": "France", "lat": 46.672714, "lon": 4.604167}]},
+    "04_14": {'done': False, 'streets' : [{"name": "Rue des 14 et 15 Avril 1945", "city": "Vaux-sur-Mer", "region": "Poitou-Charentes", "country": "France", "lat": 45.646181, "lon": -1.060556}]},
+    "04_15": {'done': False, 'streets' : [{"name": "Rue des 14 et 15 Avril 1945", "city": "Vaux-sur-Mer", "region": "Poitou-Charentes", "country": "France", "lat": 45.646181, "lon": -1.060556}]},
+    "05_08": {'done': False, 'streets' : [{"name": "Place du 11 Novembre et du 8 Mai", "city": "Essômes-sur-Marne", "region": "Picardie", "country": "France", "lat": 49.029142, "lon": 3.37383},
               {"name": "Place du 11 Nov 1918 et 8 Mai 45", "city": "Autricourt", "region": "Bourgogne", "country": "France", "lat": 47.997219, "lon": 4.61962},
               {"name": "Place du 11 Novembre et du 8 Mai", "city": "Herbault", "region": "Centre", "country": "France", "lat": 47.6056, "lon": 1.142072},
               {"name": "Place des 8 et 11 Mai 1945", "city": "Saint-Nazaire", "region": "Pays de la Loire", "country": "France", "lat": 47.278412, "lon": -2.216284},
-              {"name": "Rue du Souvenir : 11 Novembre - 8 Mai - 19 Mars", "city": "Germagny", "region": "Bourgogne", "country": "France", "lat": 46.672714, "lon": 4.604167}],
-    "05_11": [{"name": "Place des 8 et 11 Mai 1945", "city": "Saint-Nazaire", "region": "Pays de la Loire", "country": "France", "lat": 47.278412, "lon": -2.216284}],
-    "06_09": [{"name": "Rue des 9 et 10 Juin 1940", "city": "Venables", "region": "Haute-Normandie", "country": "France", "lat": 49.200421, "lon": 1.297545},
-              {"name": "Rue d\'9 10 Juin 1940", "city": "Dreux", "region": "Centre", "country": "France", "lat": 48.734489, "lon": 1.368024}],
-    "06_10": [{"name": "Rue des 9 et 10 Juin 1940", "city": "Venables", "region": "Haute-Normandie", "country": "France", "lat": 49.200421, "lon": 1.297545},
-              {"name": "Rue d\'9 10 Juin 1940", "city": "Dreux", "region": "Centre", "country": "France", "lat": 48.734489, "lon": 1.368024}],
-    "06_19": [{"name": "Rue des 19 et 20 Juin 1907", "city": "Cuxac-d'Aude", "region": "Languedoc-Roussillon", "country": "France", "lat": 43.24415, "lon": 2.998209}],
-    "06_20": [{"name": "Rue des 19 et 20 Juin 1907", "city": "Cuxac-d'Aude", "region": "Languedoc-Roussillon", "country": "France", "lat": 43.24415, "lon": 2.998209}],
-    "07_24": [{"name": "Place du 24-25 Juillet 1944", "city": "Donges", "region": "Pays de la Loire", "country": "France", "lat": 47.330319, "lon": -2.077903}],
-    "07_25": [{"name": "Place du 24-25 Juillet 1944", "city": "Donges", "region": "Pays de la Loire", "country": "France", "lat": 47.330319, "lon": -2.077903}],
-    "09_04": [{"name": "Place du 4 et 5 Septembre", "city": "Hargnies", "region": "Champagne-Ardenne", "country": "France", "lat": 50.019477, "lon": 4.790652}, 
-              {"name": "Avenue des 4, 8 et 9 Septembre", "city": "Le Portel", "region": "Nord-Pas-de-Calais", "country": "France", "lat": 50.70666, "lon": 1.57299}],
-    "09_05": [{"name": "Place du 4 et 5 Septembre", "city": "Hargnies", "region": "Champagne-Ardenne", "country": "France", "lat": 50.019477, "lon": 4.790652}],
-    "09_08": [{"name": "Avenue des 4, 8 et 9 Septembre", "city": "Le Portel", "region": "Nord-Pas-de-Calais", "country": "France", "lat": 50.70666, "lon": 1.57299}],
-    "09_09": [{"name": "Avenue des 4, 8 et 9 Septembre", "city": "Le Portel", "region": "Nord-Pas-de-Calais", "country": "France", "lat": 50.70666, "lon": 1.57299}],
-    "11_11": [{"name": "Place du 11 Novembre et du 8 Mai", "city": "Essômes-sur-Marne", "region": "Picardie", "country": "France", "lat": 49.029142, "lon": 3.37383}, 
+              {"name": "Rue du Souvenir : 11 Novembre - 8 Mai - 19 Mars", "city": "Germagny", "region": "Bourgogne", "country": "France", "lat": 46.672714, "lon": 4.604167}]},
+    "05_11": {'done': False, 'streets' : [{"name": "Place des 8 et 11 Mai 1945", "city": "Saint-Nazaire", "region": "Pays de la Loire", "country": "France", "lat": 47.278412, "lon": -2.216284}]},
+    "06_09": {'done': False, 'streets' : [{"name": "Rue des 9 et 10 Juin 1940", "city": "Venables", "region": "Haute-Normandie", "country": "France", "lat": 49.200421, "lon": 1.297545},
+              {"name": "Rue d\'9 10 Juin 1940", "city": "Dreux", "region": "Centre", "country": "France", "lat": 48.734489, "lon": 1.368024}]},
+    "06_10": {'done': False, 'streets' : [{"name": "Rue des 9 et 10 Juin 1940", "city": "Venables", "region": "Haute-Normandie", "country": "France", "lat": 49.200421, "lon": 1.297545},
+              {"name": "Rue d\'9 10 Juin 1940", "city": "Dreux", "region": "Centre", "country": "France", "lat": 48.734489, "lon": 1.368024}]},
+    "06_19": {'done': False, 'streets' : [{"name": "Rue des 19 et 20 Juin 1907", "city": "Cuxac-d'Aude", "region": "Languedoc-Roussillon", "country": "France", "lat": 43.24415, "lon": 2.998209}]},
+    "06_20": {'done': False, 'streets' : [{"name": "Rue des 19 et 20 Juin 1907", "city": "Cuxac-d'Aude", "region": "Languedoc-Roussillon", "country": "France", "lat": 43.24415, "lon": 2.998209}]},
+    "07_24": {'done': False, 'streets' : [{"name": "Place du 24-25 Juillet 1944", "city": "Donges", "region": "Pays de la Loire", "country": "France", "lat": 47.330319, "lon": -2.077903}]},
+    "07_25": {'done': False, 'streets' : [{"name": "Place du 24-25 Juillet 1944", "city": "Donges", "region": "Pays de la Loire", "country": "France", "lat": 47.330319, "lon": -2.077903}]},
+    "09_04": {'done': False, 'streets' : [{"name": "Place du 4 et 5 Septembre", "city": "Hargnies", "region": "Champagne-Ardenne", "country": "France", "lat": 50.019477, "lon": 4.790652}, 
+              {"name": "Avenue des 4, 8 et 9 Septembre", "city": "Le Portel", "region": "Nord-Pas-de-Calais", "country": "France", "lat": 50.70666, "lon": 1.57299}]},
+    "09_05": {'done': False, 'streets' : [{"name": "Place du 4 et 5 Septembre", "city": "Hargnies", "region": "Champagne-Ardenne", "country": "France", "lat": 50.019477, "lon": 4.790652}]},
+    "09_08": {'done': False, 'streets' : [{"name": "Avenue des 4, 8 et 9 Septembre", "city": "Le Portel", "region": "Nord-Pas-de-Calais", "country": "France", "lat": 50.70666, "lon": 1.57299}]},
+    "09_09": {'done': False, 'streets' : [{"name": "Avenue des 4, 8 et 9 Septembre", "city": "Le Portel", "region": "Nord-Pas-de-Calais", "country": "France", "lat": 50.70666, "lon": 1.57299}]},
+    "11_11": {'done': False, 'streets' : [{"name": "Place du 11 Novembre et du 8 Mai", "city": "Essômes-sur-Marne", "region": "Picardie", "country": "France", "lat": 49.029142, "lon": 3.37383},
               {"name": "Place du 11 Nov 1918 et 8 Mai 45", "city": "Autricourt", "region": "Bourgogne", "country": "France", "lat": 47.997219, "lon": 4.61962},
               {"name": "Place du 11 Novembre et du 8 Mai", "city": "Herbault", "region": "Centre", "country": "France", "lat": 47.6056, "lon": 1.142072},
-              {"name": "Rue du Souvenir : 11 Novembre - 8 Mai - 19 Mars", "city": "Germagny", "region": "Bourgogne", "country": "France", "lat": 46.672714, "lon": 4.604167}]
+              {"name": "Rue du Souvenir : 11 Novembre - 8 Mai - 19 Mars", "city": "Germagny", "region": "Bourgogne", "country": "France", "lat": 46.672714, "lon": 4.604167}]}
 }
 
 
@@ -142,6 +143,7 @@ REPMONTH = {"janvier": "01", "février": "02", "mars": "03", "avril": "04", "mai
 
 def cleanstr(line):
     res = line.lower()
+    logger.debug(res)
     for reps in REP1:
         res = res.replace(reps, "")
     logger.debug(res)
@@ -163,34 +165,6 @@ def cleanstr(line):
     res = res.strip()
     return res
 
-def readfile(infilename, outfilename):
-    nberrors = 0
-    nblines = 0
-    """ clean all character which are not part of a date """
-    jsonlines = json.load(codecs.open(infilename, 'r', encoding='utf-8'))
-    #print(jsonlines)
-    with open(outfilename, "w", encoding='utf-8') as file:
-        file.write('[')
-        for line in jsonlines:
-            nblines += 1
-            cleanedstr = cleanstr(line[u'name'])
-            #print("{} --> |{}|".format(line['name'], cleanedstr))
-            try:
-                datearr = getdate(cleanedstr)
-                line[u'dates'] = []
-                for dateu in datearr:
-                    line[u'dates'].append(['{:02d}_{:02d}'.format(dateu.month, dateu.day)])
-                file.write((json.dumps(line) + ",\n").encode('utf-8').decode('unicode_escape'))
-            except AttributeError:
-                print("Error on |{}| from {} --- {}".format(cleanedstr, line[u'name'], line))
-                nberrors += 1
-            except TypeError:
-                nberrors += 1
-                print("Error on |{}| from {} --- {}".format(cleanedstr, line[u'name'], line))
-        for impossible in impossibleparsing:
-            file.write(impossible + "\n")
-        file.write(']')
-    report(nblines, nberrors, {})
 
 def readfile2(infilename, outfilename):
     nberrors = 0
@@ -209,9 +183,13 @@ def readfile2(infilename, outfilename):
             for dateu in datearr:
                 datestr = '{:02d}_{:02d}'.format(dateu.month, dateu.day)
                 if datestr not in towrite:
-                    towrite[datestr] = []
-                towrite[datestr].append(line)
+                    towrite[datestr] = {'done': False, 'streets' : []}
+                towrite[datestr]['streets'].append(line)
                 nbappend += 1
+            if datestr in impossibleparsingdict:
+                towrite[datestr]['streets'].extend(impossibleparsingdict[datestr]['streets'])
+                impossibleparsingdict.pop(datestr)
+                logger.info("{} appending impossible parsing dict to towrite dict".format(datestr))
             #file.write((json.dumps(line) + ",\n").encode('utf-8').decode('unicode_escape'))
         except AttributeError:
             print("Error on |{}| from {} --- {}".format(cleanedstr, line[u'name'], line))
@@ -219,18 +197,15 @@ def readfile2(infilename, outfilename):
         except TypeError:
             nberrors += 1
             print("Error on |{}| from {} --- {}".format(cleanedstr, line[u'name'], line))
-    towrite = merge_two_dicts(towrite, impossibleparsingdict)
+    if len(impossibleparsingdict) > 0:
+        logger.info("elements remaining in impossible parsing dict :{}".format(impossibleparsingdict))
+        for key, value in impossibleparsingdict.items():
+            logger.info("adding element :{} - {}".format(key, value))
+            towrite[key] = value
+#    towrite = merge_two_dicts(towrite, impossibleparsingdict)
     with open(outfilename, "w", encoding='utf-8') as file:
         file.write((json.dumps(towrite)).encode('utf-8').decode('unicode_escape'))
     report(nblines, nberrors, towrite)
-
-def merge_two_dicts(x, y):
-    z = x.copy()   # start with x's keys and values
-    for key, value in y.items():
-        if key not in z:
-            z[key] = []
-        z[key].extend(value)
-    return z
 
 def report(nblines, nberrors, towrite):
     print("#dates: {}".format(len(towrite)))
@@ -254,7 +229,7 @@ def datetestcase():
     for case in cases:
         print("{} ==> {}".format(case, getdate(case)))
     
-    
+# usage: python quality_enhance.py france.json france_final.json
 if __name__ == "__main__":
     #datetestcase()
     #print(cleanstr("Rue du Dix-Neuf Mars 1962"))
