@@ -5,7 +5,7 @@ The map gives locations of such streets/places/squares...
 
 # Data
 
-Datas have been downloader from https://bano.openstreetmap.fr/data/ (full.sjson file), then processed with scripts:
+Datas have been downloaded from https://bano.openstreetmap.fr/data/ (full.sjson file), then processed with scripts:
 * data/get_address_json_v2.sh: Shell script that parse file and extract street with a date in it.
 * data/quality_enhance.py: python script that parse street name, attempt to recognize date and add it to dataset (france_final.json)
 
