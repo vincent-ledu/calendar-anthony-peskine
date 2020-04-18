@@ -10,11 +10,11 @@ var JsonDB = require('node-json-db');
 var Jimp = require("jimp");
 
 var app = express();
-var data = fs.readFileSync('data/france_final.json', 'utf8');
-var jsondata = JSON.parse(data);
 
 var data_dir = process.env.DATA_DIR || process.env.OPENSHIFT_DATA_DIR || 'data/';
 var photos_dir = data_dir + "/photos/";
+var data = fs.readFileSync(data_dir + '/france_final.json', 'utf8');
+var jsondata = JSON.parse(data);
 console.log("process.env.OPENSHIFT_DATA_DIR: "+process.env.OPENSHIFT_DATA_DIR);
 console.log("DATA_DIR: " + data_dir);
 var upload = multer({ dest: photos_dir })
