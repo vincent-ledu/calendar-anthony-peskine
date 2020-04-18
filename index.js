@@ -13,7 +13,7 @@ var app = express();
 var data = fs.readFileSync('data/france_final.json', 'utf8');
 var jsondata = JSON.parse(data);
 
-var data_dir = process.env.OPENSHIFT_DATA_DIR || 'data/';
+var data_dir = process.env.DATA_DIR || process.env.OPENSHIFT_DATA_DIR || 'data/';
 var photos_dir = data_dir + "/photos/";
 console.log("process.env.OPENSHIFT_DATA_DIR: "+process.env.OPENSHIFT_DATA_DIR);
 console.log("DATA_DIR: " + data_dir);
@@ -149,7 +149,7 @@ app.get('/addresses/filter/:filter', function (req, res) {
   .use(function (req, res, next) {
     res.redirect('/');
   });
-var server_port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3008;
+var server_port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3001;
 var server_ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 console.log("listening to " + server_ip+":" + server_port);
 app.listen(server_port, server_ip);
