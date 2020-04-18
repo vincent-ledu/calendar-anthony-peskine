@@ -25,7 +25,7 @@ Datas have been downloaded from https://bano.openstreetmap.fr/data/ (full.sjson 
 * In file calendar-anthony-peskine/views/index.ejs:
   * Search at the bottom of the file the line with 
   ```javascript
-   <script async defer src="https://maps.googleapis.com/maps/api/js?key={your google api key here}&callback=initMap">
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=<GOOGLE_API_KEY>&callback=initMap">
   ```
   and put your google api key here.
 * In a terminal, 
@@ -34,7 +34,7 @@ Datas have been downloaded from https://bano.openstreetmap.fr/data/ (full.sjson 
   * type : ```npm install```
   * type : ```npm install pm2```
   * type : ```pm2 start index.js```
-  * in your favorite browser, go to http://localhost:8080
+  * in your favorite browser, go to http://localhost:3001
 
 # Screenshot
 ![Screenshot](public/screenshot1.jpg)
