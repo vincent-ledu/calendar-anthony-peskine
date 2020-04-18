@@ -23,7 +23,7 @@
     
     <script>
         var dates = {};
-        $.get('/addresses', function (data) {
+        $.get('./addresses', function (data) {
                 datelocations = data;
                 for (var datel in datelocations) {
                     if (Array.isArray(datelocations[datel]))

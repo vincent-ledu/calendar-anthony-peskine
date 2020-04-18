@@ -57,7 +57,7 @@
                 // nothing to do.
             });
 
-            $.get('/addresses', function (data) {
+            $.get('./addresses', function (data) {
                 datelocations = data;
                 for (var datel in datelocations) {
                     if (Array.isArray(datelocations[datel]))
@@ -72,7 +72,7 @@
 
                 myfunc = function () {
                     var filter = $("#filter").val();
-                    $.get("/addresses/filter/" + filter, function (data) {
+                    $.get("./addresses/filter/" + filter, function (data) {
                         datelocations = data;
                         deleteMarkers();
 
