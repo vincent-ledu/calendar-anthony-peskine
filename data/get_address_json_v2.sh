@@ -14,7 +14,7 @@ if [ "$METHOD" == "UNPIPED" ]; then
 #		cat full.sjson | awk -F "," 'tolower($3) ~ "janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre" { print $0 }' \
 		cat full.sjson | grep -iw "$month" \
 		| grep -vi "maison" \
-		| awk -F "," 'tolower($3) ~ "0|1|2|3|4|5|6|7|8|9|premier|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|trente" { print $0 }' \
+		| awk -F "," 'tolower($4) ~ "0|1|2|3|4|5|6|7|8|9|premier|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|trente" { print $0 }' \
 		| jq '. | "{\"id\":\"\(.id)\", \"name\":\"\(.name)\", \"city\": \"\(.city)\", \"region\":\"\(.region)\", \"country\":\"France\", \"lat\":\(.lat), \"lon\":\(.lon)}"' \
 		|  sed 's/\"{/{/g' | sed 's/\\\"/\"/g' | sed 's/}\"/},/g' \
 		| sort -u
@@ -24,7 +24,7 @@ else
 #	cat full.sjson | awk -F "," 'tolower($3) ~ "janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre" { print $0 }' \
 	cat full.sjson | grep -iw "$months" \
 		| grep -vi "maison" \
-		| awk -F "," 'tolower($3) ~ "0|1|2|3|4|5|6|7|8|9|premier|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|trente" { print $0 }' \
+		| awk -F "," 'tolower($4) ~ "0|1|2|3|4|5|6|7|8|9|premier|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|trente" { print $0 }' \
 		| jq '. | "{\"id\":\"\(.id)\", \"name\":\"\(.name)\", \"city\": \"\(.city)\", \"region\":\"\(.region)\", \"country\":\"France\", \"lat\":\(.lat), \"lon\":\(.lon)}"' \
 		|  sed 's/\"{/{/g' | sed 's/\\\"/\"/g' | sed 's/}\"/},/g' \
 		| sort -u

@@ -4,12 +4,12 @@ import sys
 import codecs
 import re
 from datetime import datetime
-import logging
-import logging.config
+#import logging
+#import logging.config
 
-logging.config.fileConfig('logging.conf')
+#logging.config.fileConfig('logging.conf')
 
-logger = logging.getLogger(__name__)
+#logger = logging.getLogger(__name__)
 '''
 impossibleparsing = ['{"name": "Place du 4 et 5 Septembre", "city": "Hargnies", "region": "Champagne-Ardenne", "country": "France", "lat": 50.019477, "lon": 4.790652}          , "dates": ["09_04", "09_05"]},',
                      '{"name": "Place du 11 Novembre et du 8 Mai", "city": "Essômes-sur-Marne", "region": "Picardie", "country": "France", "lat": 49.029142, "lon": 3.37383}    , "dates": ["11_11", "05_08"]},', 
@@ -74,36 +74,36 @@ def getdate(line):
     
     match = re.search(patternddmm, line)
     if match != None:
-        logger.debug("matching ddmm$")
+#        logger.debug("matching ddmm$")
         res = datetime.strptime("{} {} 2004".format(match.group(1), match.group(3)), dateformat1)
         return [res]
     else:
         match = re.search(patternddmmyyyy, line)
         if match != None:
-            logger.debug("matching ddmmyyyy$")
+            # logger.debug("matching ddmmyyyy$")
             res = datetime.strptime("{} {} 2004".format(match.group(1), match.group(3)), dateformat1)
             return [res]
         else:
             match = re.search(patternddmmyy, line)
             if match != None:
-                logger.debug("matching ddmmyy$")
+#                logger.debug("matching ddmmyy$")
                 res = datetime.strptime("{} {} 2004".format(match.group(1), match.group(3)), dateformat1)
                 return [res]
             else:
                 match = re.search(patternddmmyyyy_yyyy, line)
                 if match != None:
-                    logger.debug("matching patternddmmyyyy_yyyy$")
+                    # logger.debug("matching patternddmmyyyy_yyyy$")
                     res = datetime.strptime("{} {} 2004".format(match.group(1), match.group(3)), dateformat1)
                     return [res]
                 else:
                     match = re.search(patternddmmyyyyddmmyyyy, line)
                     if match != None:
-                        logger.debug("matching patternddmmyyyyddmmyyyy$")
+                        # logger.debug("matching patternddmmyyyyddmmyyyy$")
                         res1 = datetime.strptime("{} {} 2004".format(match.group(1), match.group(3)), dateformat1)
                         res2 = datetime.strptime("{} {} 2004".format(match.group(5), match.group(7)), dateformat1)
                         return [res1, res2]
             
-    logger.debug("line: %s doesn't match!" % line)
+    # logger.debug("line: %s doesn't match!" % line)
     return None
 
 REP1 = ["cour 6", "cour 7", "cour 8", "cour 9", "cour 10", "(", ")", "ruelle", "placette",
@@ -143,25 +143,25 @@ REPMONTH = {"janvier": "01", "février": "02", "mars": "03", "avril": "04", "mai
 
 def cleanstr(line):
     res = line.lower()
-    logger.debug(res)
+    # logger.debug(res)
     for reps in REP1:
         res = res.replace(reps, "")
-    logger.debug(res)
+    # logger.debug(res)
     """ remove multiple white space """
     res = re.sub(' +',' ', res)
-    logger.debug(res)
+    # logger.debug(res)
     for torep, rep in REPMONTH.items():
         res = res.replace(torep, rep)
-    logger.debug(res)
+    # logger.debug(res)
     for torep, rep in REPDAY1.items():
         res = res.replace(torep, rep)
-    logger.debug(res)
+    # logger.debug(res)
     for torep, rep in REPDAY2.items():
         res = res.replace(torep, rep)
-    logger.debug(res)
+    # logger.debug(res)
     for torep, rep in REP2.items():
         res = res.replace(torep, rep)
-    logger.debug(res)
+    # logger.debug(res)
     res = res.strip()
     return res
 
@@ -189,7 +189,7 @@ def readfile2(infilename, outfilename):
             if datestr in impossibleparsingdict:
                 towrite[datestr]['streets'].extend(impossibleparsingdict[datestr]['streets'])
                 impossibleparsingdict.pop(datestr)
-                logger.info("{} appending impossible parsing dict to towrite dict".format(datestr))
+                # logger.info("{} appending impossible parsing dict to towrite dict".format(datestr))
             #file.write((json.dumps(line) + ",\n").encode('utf-8').decode('unicode_escape'))
         except AttributeError:
             print("Error on |{}| from {} --- {}".format(cleanedstr, line[u'name'], line))
@@ -198,9 +198,9 @@ def readfile2(infilename, outfilename):
             nberrors += 1
             print("Error on |{}| from {} --- {}".format(cleanedstr, line[u'name'], line))
     if len(impossibleparsingdict) > 0:
-        logger.info("elements remaining in impossible parsing dict :{}".format(impossibleparsingdict))
+        # logger.info("elements remaining in impossible parsing dict :{}".format(impossibleparsingdict))
         for key, value in impossibleparsingdict.items():
-            logger.info("adding element :{} - {}".format(key, value))
+            # logger.info("adding element :{} - {}".format(key, value))
             towrite[key] = value
 #    towrite = merge_two_dicts(towrite, impossibleparsingdict)
     with open(outfilename, "w", encoding='utf-8') as file:
