@@ -9,6 +9,15 @@ Datas have been downloaded from https://bano.openstreetmap.fr/data/ (full.sjson 
 * data/get_address_json_v2.sh: Shell script that parse file and extract street with a date in it.
 * data/quality_enhance.py: python script that parse street name, attempt to recognize date and add it to dataset (france_final.json)
 
+for example: 
+```
+cd data/
+wget https://bano.openstreetmap.fr/data/full.sjson.gz
+gunzip full.sjson.gz
+get_address_json_v2.sh > france_month_piped_grepword.json
+python3 quality_enhance.py france_month_piped_grepword.json france_final.json
+```
+
 # Requirements
 
 * To run the app:
@@ -16,6 +25,7 @@ Datas have been downloaded from https://bano.openstreetmap.fr/data/ (full.sjson 
 * To use data extractor
   * python binaries (tested with v3.4 and v3.6)
   * bash shell interpreter (linux, macOS, mobaxterm)
+  * jq sudo apt-get install jq
 
 # Installation instructions
 
