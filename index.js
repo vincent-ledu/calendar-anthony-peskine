@@ -66,13 +66,11 @@ app.get('/addresses', function (req, res) {
 })
 app.get('/addresses/filter/:filter', function (req, res) {
   // get list of address in a json object
-  //res.render('todolist.ejs', {todolist: req.session.todolist});
   try {
     res.contentType('application/json');
     if (req.params.filter != 'undefined')
     {
       var filter = req.params.filter;
-      //var data = fs.readFileSync('data/france_final.json', 'utf8');
       
       var result = {};
       var f = filter.split('f');
@@ -92,9 +90,7 @@ app.get('/addresses/filter/:filter', function (req, res) {
     res.end();
   }
 })
-  app.get('/test', function (req, res) {
-    res.render('test.ejs');
-  })
+ 
 
 
   .post('/addresses/done/:month_day', upload.single('imagefile'), function (req, res, next) {

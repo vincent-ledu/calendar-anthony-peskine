@@ -14,8 +14,11 @@ for example:
 cd data/
 wget https://bano.openstreetmap.fr/data/full.sjson.gz
 gunzip full.sjson.gz
-get_address_json_v2.sh > france_month_piped_grepword.json
+./get_address_json_v2.sh > france_month_piped_grepword.json
+## remove last comma at the end of the file
 python3 quality_enhance.py france_month_piped_grepword.json france_final.json
+sed -i 's/{"done": false, "streets": /test/g' france_final.json
+sed -i 's/}]}/}]/g' france_final.json
 ```
 
 # Requirements
